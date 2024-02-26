@@ -1,0 +1,25 @@
+<div class="row g-5 py-5 mb-5">
+  @for (movie of Movies ; track movie.id) {
+
+  <div
+    class="col-sm-4 p-5 text-muted text-center"
+    [routerLink]="['/movieDetails', movie.id]"
+    routerLinkActive="router-link-active"
+  >
+    <img
+      class="img-fluid w-100"
+      [src]="
+        movie.poster_path
+          ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path
+          : 'placeholder_image_url'
+      "
+      alt=""
+    />
+    <p>MovieName:{{ movie.title }}</p>
+    <h4>Language:{{ movie.original_language }}</h4>
+    <h4>RealseDate:{{ movie.release_date }}</h4>
+
+    <button class="btn btn-primary">Watch Now</button>
+  </div>
+  }
+</div>

@@ -1,0 +1,13 @@
+{
+  "categories": [
+    {
+      "category": "smart phones",
+      "id": "123"
+    },
+    {
+      "category": "Electronics",
+      "id": "456"
+    }
+  ],
+  "products": []
+}

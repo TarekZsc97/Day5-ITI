@@ -1,0 +1,20 @@
+<div class="row g-5 py-5 mb-5">
+  <div class="col-sm-4 p-5 text-muted text-center">
+    <div>
+      <img
+        class="img-fluid w-100"
+        [src]="
+          movie.poster_path
+            ? 'https://image.tmdb.org/t/p/w500/' + movie.poster_path
+            : ''
+        "
+        alt=""
+      />
+    </div>
+    <h4>{{ movie.title }}</h4>
+    <h4>Language:{{ movie.original_language }}</h4>
+    <h4>RealseDate:{{ movie.release_date }}</h4>
+
+    <button class="btn btn-primary">Watch Now</button>
+  </div>
+</div>

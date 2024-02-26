@@ -1,0 +1,175 @@
+<!-- <button (click)="addProduct(addNewProduct)" class="btn btn-secondary">
+  Add Product
+</button> -->
+
+<div class="container">
+  <div class="card mb-8">
+    <div class="card-header">
+      {{ updateMode ? "Update Product" : "Add Product" }}
+    </div>
+
+    <div class="card-body">
+      <form
+        #addProductForm="ngForm"
+        (ngSubmit)="updateMode ? updateProduct() : addProduct()"
+      >
+        <div class="d-flex align-items-center m-auto w-50">
+          <label class="w-25" for=""> select Category</label>
+          <select
+            [ngModelOptions]="{ standalone: true }"
+            class="form-select mx-auto my-3 w-75"
+            #categorySelect="ngModel"
+            [(ngModel)]="product.Category"
+            required
+            [ngClass]="{
+              'is-invalid':
+                (categorySelect.touched || categorySelect.dirty) &&
+                !categorySelect.valid
+            }"
+          >
+            @for (item of categories; track item.id) {
+
+            <option [value]="item.category">{{ item.category }}</option>
+            }
+          </select>
+        </div>
+
+        <span class="invalid-feedback text-center pb-3">
+          @if(categorySelect.errors?.['required']){
+          <span>Category is required </span>}
+        </span>
+
+        <div class="form-group row mb-2">
+          <label for="productName" class="col-md-2 col-form-label"
+            >Product Name</label
+          >
+          <div class="col-md-8">
+            <input
+              [ngModelOptions]="{ standalone: true }"
+              type="text"
+              name="productName"
+              class="form-control"
+              id="productName"
+              placeholder="Product Name"
+              required
+              minlength="3"
+              #productNameInput="ngModel"
+              [(ngModel)]="product.productName"
+              [ngClass]="{
+                'is-invalid':
+                  (productNameInput.touched || productNameInput.dirty) &&
+                  !productNameInput.valid
+              }"
+            />
+
+            <span class="invalid-feedback">
+              @if(productNameInput.errors?.['required']){
+              <span>Product Name is required </span>
+              } @if(productNameInput.errors?.['required']){
+              <span>Product Name at least 3 chars</span>
+              }
+            </span>
+          </div>
+        </div>
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="price">Price</label>
+          <div class="col-md-8">
+            <input
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              id="price"
+              type="number"
+              placeholder="Price"
+              required
+              name="price"
+              min="50"
+              #PriceInput="ngModel"
+              [(ngModel)]="product.Price"
+              [ngClass]="{
+                'is-invalid':
+                  (PriceInput.touched || PriceInput.dirty) && !PriceInput.valid
+              }"
+            />
+
+            <span class="invalid-feedback">
+              @if(PriceInput.errors?.['required']){
+              <span>Price is required </span>
+              } @if(PriceInput.errors?.['required']){
+              <span>Price at least 50</span>
+              }
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group row mb-2">
+          <label class="col-md-2 col-form-label" for="quantity">Quantity</label>
+          <div class="col-md-8">
+            <input
+              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              id="quantity"
+              type="number"
+              placeholder="Quantity"
+              required
+              min="1"
+              name="quantity"
+              #quantityInput="ngModel"
+              [(ngModel)]="product.Quantity"
+              [ngClass]="{
+                'is-invalid':
+                  (quantityInput.touched || quantityInput.dirty) &&
+                  !quantityInput.valid
+              }"
+            />
+
+            <span class="invalid-feedback">
+              @if(quantityInput.errors?.['required']){
+              <span>Qauntity is required </span>
+              } @if(quantityInput.errors?.['required']){
+              <span>Qauntity at least 1</span>
+              }
+            </span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+          {{ updateMode ? "Update Product" : "Add Product" }}
+        </button>
+      </form>
+    </div>
+  </div>
+  @if(productsApi.length !== 0) {
+  <table class="table table-bordered table-info text-center ">
+    <thead>
+      <tr>
+        <th scope="col">Product Title</th>
+        <th scope="col">Product Price</th>
+        <th scope="col">Product Quantity</th>
+        <th scope="col">Product Category</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(item of productsApi ;track item.id){
+      <tr>
+        <td>{{ item.productName }}</td>
+        <td>{{ item.Price }}</td>
+        <td>{{ item.Quantity }}</td>
+        <td>{{ item.Category }}</td>
+        <td>
+          <button (click)="updateProductBtn(item.id)" class="btn btn-primary">
+            Update
+          </button>
+        </td>
+        <td>
+          <button (click)="deleteProduct(item.id)" class="btn btn-danger">
+            Delete
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+</div>

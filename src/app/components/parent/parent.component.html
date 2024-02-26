@@ -1,0 +1,40 @@
+<button class="btn btn-success" routerLink="/cart">Go To Cart</button>
+
+<div class="d-flex align-items-center w-50 m-auto">
+  <label for="" class="w-50">Select Category</label>
+  <select class="form-control w-75 m-auto mt-3" [(ngModel)]="filteredProducts">
+    <option value="all">All</option>
+    <option value="smart phones">smart phones</option>
+    <option value="electronics">Electronics</option>
+  </select>
+</div>
+
+<app-products
+  [filteredProducts]="filteredProducts"
+  (addChildEvent)="getItems($event)"
+></app-products>
+
+@if(cart.length) {
+<h1>Cart Items</h1>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Product Title</th>
+      <th scope="col">Product Price</th>
+      <th scope="col">Product quantity</th>
+      <th scope="col">Purchase Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for(item of cart ;track item.id){
+    <tr>
+      <td>{{ item.title }}</td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.productInCart }}</td>
+      <td>{{ item.purchaseDate | date : "short" }}</td>
+    </tr>
+    }
+  </tbody>
+</table>
+<h3 class="text-center bg-dark">TotalPrice:{{ totalPrice() | currency }}</h3>
+}

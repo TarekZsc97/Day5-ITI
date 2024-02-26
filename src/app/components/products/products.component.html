@@ -1,0 +1,48 @@
+<div class="row mt-3 mb-5">
+ 
+  @for (item of filteredProduct; track item.id) {
+
+  <div appProductCard class="col-sm-4 text-muted g-5 p-2 text-center">
+    @if(item.isPurchased) {
+    <h4>Thanks for purchasing from our Store {{ clientName }}</h4>
+    }@else {
+    <div class="h-50">
+      <img class="img-fluid w-25 h-75" [src]="item.image" alt="" />
+    </div>
+    }
+    <div class="h-50" style="background-color: rgb(238, 238, 238)">
+      <p>{{ item.title }}</p>
+      <h4>{{ item.price | currency }}</h4>
+      <h4>{{ item.cardNumber | creditCard }}</h4>
+
+      <h4
+        [ngStyle]="{
+          backgroundColor: item.quantity <= 1 ? 'yellow' : '#FFFF00'
+        }"
+      >
+        @switch (item.quantity) {@case (1) {Last One Item} @case (2) {Last Two
+        Items} @case (0) {Out Of Stock} @default {In Stock:
+        {{ item.quantity }}}}
+      </h4>
+      <h4>{{ item.CategoryID }}</h4>
+      <div class="d-flex justify-content-between">
+        <button
+          [disabled]="item.quantity === 0"
+          (click)="togglePurchase(item.id)"
+          (click)="addToCart(item)"
+          class="btn btn-dark"
+        >
+          Buy Now
+        </button>
+        <button
+          [routerLink]="['/productDetails', item.id]"
+          routerLinkActive="router-link-active"
+          class="btn btn-danger"
+        >
+          Details
+        </button>
+      </div>
+    </div>
+  </div>
+  }
+</div>
